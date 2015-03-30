@@ -1,81 +1,67 @@
-// The functions specific to these examples are in this file 
-// (json-generation-examples.js). That is, the functions here refer
-// to specific server-side URLs or client-side ids.
-// The functions that are generic and reusable are in ajax-utils.js.
+$(function() {
+	$("#btn_city1").click(function(e) {
+		getCities("city-type-1", "json-city-table-1");
+	});
+	$("#btn_city2").click(function(e) {
+		getCities("city-type-2", "json-city-table-2");
+	});
+	$("#btn_city3").click(function(e) {
+		$.ajax({
+			method: "GET",
+			url: "show-city-types",
+			dataType: "json",
+			success: showCityTypes
+		});
+	});
+	$("#btn_city4").click(function(e) {
+		var data = "cityNames=" + makeJsonString(getRandomCities());
+		$.ajax({
+			method: "POST",
+			url: "show-cities-3",
+			dataType: "json",
+			data: data,
+			success: function (data, statusText, jqXHR, resultRegion) {
+				showCities(data, statusText, jqXHR, "json-city-table-3");
+			}
+		});
+	});
+});
 
-function cityTable1(address, inputField, resultRegion) {
-  var data = "cityType=" + getValue(inputField);
-  ajaxPost(address, data, 
-           function(request) { 
-             showCityInfo2(request, resultRegion); 
-           });
+function getCities(selectId, resultRegionId) {
+	var data = "cityType=" + $("#" + selectId).val();
+	
+	$.ajax({
+		method: "POST",
+		url: "show-cities-1",
+		data: data,
+		dataType: "json",
+		success: function (data, statusText, jqXHR, resultRegion) {
+			showCities(data, statusText, jqXHR, resultRegionId);
+		}
+	});
 }
 
-function cityTable2(address, inputField, resultRegion) {
-  var data = "cityType=" + getValue(inputField);
-  ajaxPost(address, data, 
-           function(request) { 
-             showCityInfo2(request, resultRegion); 
-           });
+function showCities(data, statusText, jqXHR, resultRegionId) {
+	var headings = ["City", "Time", "Population"];
+	var rows = new Array();
+	for (var i = 0; i < data.length; i++) {
+		var city = data[i];
+		rows[i] = [city.name, city.time, city.pop];
+	}
+	$("#" + resultRegionId).html(getTable(headings, rows));
 }
 
-// Data that arrives is an array of city objects.
-// City objects contain (among other things) 
-// name, time, and population properties.
-
-function showCityInfo2(request, resultRegion) {
-  if ((request.readyState == 4) &&
-      (request.status == 200)) {
-    var rawData = request.responseText;
-    var cities = eval("(" + rawData + ")");
-    var headings = ["City", "Time", "Population"];
-    var rows = new Array();
-    for(var i=0; i<cities.length; i++) {
-      var city = cities[i];
-      rows[i] = [city.name, city.time, city.population];
-    }
-    var table = getTable(headings, rows);
-    htmlInsert(resultRegion, table);
-  }
-}
-
-function cityTypeList(address, resultRegion) {
-  ajaxPost(address, null, 
-           function(request) { 
-             showCityTypeInfo(request, resultRegion); 
-           });
-}
-
-// Data that arrives is an object where the
-// properties are city categories and the
-// associated values are arrays of city names.
-
-function showCityTypeInfo(request, resultRegion) {
-  if ((request.readyState == 4) &&
-     (request.status == 200)) {
-    var rawData = request.responseText;
-    var cityTypes = eval("(" + rawData + ")");
+function showCityTypes(data, statusText, jqXHR) {
     var headings = new Array();
     var row1Entries = new Array();
     var i = 0;
-    for(var cityType in cityTypes) {
+    for(var cityType in data) {
       headings[i] = cityType;
-      row1Entries[i] = getBulletedList(cityTypes[cityType]);
+      row1Entries[i] = getBulletedList(data[cityType]);
       i++;
     }
     var rows = [row1Entries];
-    var result = getTable(headings, rows);
-    htmlInsert(resultRegion, result);
-  }
-}
-
-function randomCityTable(address, resultRegion) {
-  var data = "cityNames=" + 
-             makeJsonString(getRandomCities());
-  ajaxPost(address, data, 
-           function(request) { 
-             showCityInfo2(request, resultRegion); 
-           });
+    $("#city-types").html(getTable(headings, rows));
 }
 
 var cityNames = 
@@ -98,5 +84,3 @@ function getRandomCities() {
   }
   return(randomCities);
 }
-
-

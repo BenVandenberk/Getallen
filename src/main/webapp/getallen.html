@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="./css/styles.css" type="text/css" />
+<script src="./scripts/jquery.js" type="text/javascript"></script>
+<script src="./scripts/getallen.js" type="text/javascript"></script>
+<script src="./scripts/grafieken.js" type="text/javascript"></script>
+<script src="./scripts/utils.js" type="text/javascript"></script>
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"
+	type="text/javascript"></script>
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.js"
+	type="text/javascript"></script>
+<meta charset="UTF-8">
+<title>Getallen</title>
+</head>
+<body>
+
+	<div align="center">
+
+		<table border="5">
+			<tr>
+				<th class="title">Getallen</th>
+			</tr>
+		</table>
+		
+		<p />
+
+		<fieldset>
+			<legend>Priemfactoren</legend>
+			<form action="#" id="frm_priemfactoren">
+				<table>
+					<tr>
+						<td><label>Getal: </label></td>
+						<td><input type="text" id="txt_getal" name="getal"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" value="Bereken priemfactoren" id="btn_priemfactoren" /></td>
+					</tr>
+				</table>
+			</form>
+			<p />
+			<div class="errorMessages" id="priem_error"></div>
+			<div id="priemfactoren"></div>			
+		</fieldset>
+		
+		<p />
+		
+		<fieldset>
+			<legend>Machten</legend>
+			<form action="#" id="frm_machten">
+				<table>
+					<tr>
+						<td><label>Getal: </label></td>
+						<td><input type="text" id="txt_getal2" name="getal"/></td>
+					</tr>
+					<tr>
+						<td><label>Tot macht: </label></td>											
+						<td><input type="text" id="txt_macht" name="macht"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" value="Bereken machten" id="btn_machten" /></td>
+					</tr>
+				</table>
+			</form>
+			<p />
+			<div class="errorMessages" id="macht_error"></div>
+			<div id="machten"></div>			
+		</fieldset>
+		
+		<p />
+		
+		<fieldset>
+			<legend>Enkele macht</legend>
+			<form action="#" id="frm_enkeleMacht">
+				<table>
+					<tr>
+						<td><label>x: </label></td>
+						<td><input type="text" name="getal"/></td>
+					</tr>
+					<tr>
+						<td><label>y: </label></td>											
+						<td><input type="text" name="macht"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" value="x tot de y-de" id="btn_enkeleMacht" /></td>
+					</tr>
+				</table>
+			</form>
+			<p />
+			<div class="errorMessages" id="enkeleMacht_error"></div>
+			<div id="enkeleMacht"></div>			
+		</fieldset>
+		
+		<p />
+		
+		<fieldset>
+			<legend>Polynomen</legend>
+				<table>
+					<tr>
+						<td><label>Graad: </label></td>
+						<td colspan="2">
+							<select id="sel_graad">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				
+			<p />
+			<div id="poly_errors" class="errorMessages"></div>
+			<p />
+				
+			<form action="#" id="frm_polynomen">
+				<table>					
+					<tr id="tr_inputFields">				
+					</tr>							
+				</table>
+				<input type="hidden" id="hdn_graad" name="graad" />
+				<input type="hidden" id="hdn_precizie" name="precizie" />
+				<input type="hidden" id="hdn_pixelwidth" name="pixelwidth" />				
+			</form>
+			<p />
+			<div class="errorMessages" id="polynomen_error"></div>
+			
+			<table class="simpleBorder">
+				<tr>
+					<td class="right">
+						<input type="button" value="Wis" id="btn_wis" />
+						<input type="button" value="Teken" id="btn_teken" />
+					</td>					
+				</tr>
+				<tr>
+					<td width="450px"><canvas id="canvas" width="450px" height="300px" style="background-color: white"></canvas></td>
+					<td width="50px" class="alignbottom">			
+						<table>							
+							<tr>
+								<td><label>X: </label></td>	
+								<td><label id="lbl_xZoom"></label></td>								
+							</tr>	
+							<tr>
+								<td><label>Y: </label></td>
+								<td><label id="lbl_yZoom"></label></td>	
+							</tr>
+						</table>
+					</td>
+					<td width="600px" class="aligntop">						
+						<ul id="ul_vergelijkingen">							
+						</ul>						
+					</td>									
+				</tr>
+				<tr>
+					<td class="right">
+						<select id="sel_XY">
+							<option value="x">X</option>
+							<option value="y">Y</option>
+						</select>
+						<input type="button" value="Zoom in" id="btn_zoomIn" />
+						<input type="button" value="Zoom uit" id="btn_zoomUit" />
+					</td>					
+				</tr>
+			</table>
+			
+			<p />
+			
+		</fieldset>
+
+	</div>
+
+</body>
+</html>
